@@ -1,0 +1,9 @@
+md-pay-draw Helm Chart
+- Release Name: {{ .Release.Name }}
+- Version: {{ .Chart.Version }}
+
+md-pay-draw
+- Namespace: {{ include "md-pay-draw.namespace" . }}
+- Image: {{ .Values.image }}
+- Version: {{ .Values.version }}
+- Replicas: {{ .Values.replicas }}
