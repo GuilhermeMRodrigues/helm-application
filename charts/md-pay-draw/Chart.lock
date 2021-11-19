@@ -1,0 +1,9 @@
+dependencies:
+- name: common
+  repository: file://../common
+  version: 0.1.7
+- name: common
+  repository: file://../registry
+  version: 0.1.2
+digest: sha256:a44082a584b5cdaac60a6b340b6bae7c8202b44f5217df314136380298105648
+generated: "2021-11-19T18:57:59.361279809-03:00"

@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  {{- with .annotations | default .Values.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  labels:  
+    {{- include "common.helm" . | nindent 4 }}  
+    {{- include "md-pay-draw.label" . | nindent 4 }}
+  namespace: {{ include "md-pay-draw.namespace" . }}
+  name: {{ include "common.name.value" . }}
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      {{- include "md-pay-draw.label.immutable" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "md-pay-draw.label" . | nindent 8 }}
+      annotations:
+        checksum/config-env: {{ include (print $.Template.BasePath "/configMap.yaml") . | sha256sum }}
+        checksum/secret-env: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
+    spec:
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      affinity:
+      {{- if not .Values.affinity }}
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    {{- include "md-pay-draw.label" . | nindent 20 }}
+                topologyKey: topology.kubernetes.io/zone
+              weight: 100    
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    {{- include "md-pay-draw.label" . | nindent 20 }}
+                topologyKey: kubernetes.io/hostname
+              weight: 90      
+      {{- else }}
+        {{- toYaml .Values.affinity | nindent 8 }}  
+      {{- end }}
+      imagePullSecrets:
+        - name: {{ .Values.imagePullSecret }}
+      containers:
+        - name: md-pay-draw
+          image: {{ .Values.image }}:{{ .Values.version }}
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.readinessProbe }}
+          readinessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.livenessProbe }}
+          livenessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.startupProbe }}
+          startupProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          ports:
+            - name: http
+              containerPort: 5000
+          envFrom:
+            - configMapRef:
+                name: {{ include "common.name.value" . }}
+            - secretRef:
+                name: {{ include "common.name.value" . }}
+          env:
+            - name: NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
