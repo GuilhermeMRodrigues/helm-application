@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:  
+    {{- include "common.helm" . | nindent 4 }}
+  namespace: {{ include "md-pay-draw.namespace" . }}
+  name: {{ include "common.name.value" . }}
+data:
+  {{- $values := merge .Values.enviroments.values .Values.enviroments.defaults }}
+  {{- range $key, $value := $values }}
+  {{- $key | nindent 2 }}: {{ $value | quote }}
+  {{- end }}
