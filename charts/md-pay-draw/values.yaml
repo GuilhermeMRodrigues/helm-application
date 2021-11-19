@@ -46,7 +46,7 @@ enviroments:
 service:
     type: ClusterIP
     loadBalancerIP: 
-    port: 5000
+    port: 7006
     
     labels: {} 
     annotations: {}  

@@ -69,7 +69,7 @@ spec:
           {{- end }}
           ports:
             - name: http
-              containerPort: 5000
+              containerPort: 7006
           envFrom:
             - configMapRef:
                 name: {{ include "common.name.value" . }}
