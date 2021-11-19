@@ -8,7 +8,7 @@ entries:
     - name: common
       repository: file://../common
       version: 0.1.7
-    - name: common
+    - name: registry
       repository: file://../registry
       version: 0.1.2
     description: md-pay-draw Helm Chart
