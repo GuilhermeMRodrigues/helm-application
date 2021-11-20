@@ -3,6 +3,26 @@ entries:
   md-pay-draw:
   - apiVersion: v2
     appVersion: 1.0.0
+    created: "2021-11-20T01:55:02.165054141Z"
+    dependencies:
+    - name: common
+      repository: file://../common
+      version: 0.1.7
+    - name: registry
+      repository: file://../registry
+      version: 0.1.2
+    description: md-pay-draw Helm Chart
+    digest: 02371cbfc1c6169eef31efb351e57825adbbf5a10970a48b469a937c20b2323e
+    maintainers:
+    - email: julio.goncalves@dock.tech
+      name: Julio Goncalves
+    name: md-pay-draw
+    type: application
+    urls:
+    - https://github.com/merci-app/helm-application/releases/download/md-pay-draw-0.1.1/md-pay-draw-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 1.0.0
     created: "2021-11-19T22:55:01.530878844Z"
     dependencies:
     - name: common
