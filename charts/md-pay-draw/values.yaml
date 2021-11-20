@@ -61,8 +61,8 @@ registry:
   servers:
   - name: payment-and-withdraw
     server: 119266638796.dkr.ecr.us-west-2.amazonaws.com/payment-and-withdraw
-    username: system.harness
-    password: Conductor@1
-
+    username: 
+    password: 
+    releasename: md-pay-draw-1637369573
 
 
