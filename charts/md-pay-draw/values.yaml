@@ -66,6 +66,5 @@ registry:
     releasename: md-pay-draw-1637369573
 
 
-imagePullSecrets:
-  - name: regcred
+
 
