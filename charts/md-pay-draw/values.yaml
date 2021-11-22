@@ -1,6 +1,7 @@
 replicas: 1
 
-
+imagePullSecrets:
+- name: aws-registry
 image: 119266638796.dkr.ecr.us-west-2.amazonaws.com/payment-and-withdraw
 version: c6567a98
 
